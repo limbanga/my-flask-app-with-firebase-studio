@@ -12,6 +12,7 @@ login_manager.login_view = 'auth.login'  # Đặt trang đăng nhập nếu ngư
 def create_app(config_class='config.DevConfig'):
     app = Flask(__name__)
     app.config.from_object(config_class)
+    app.config['DEBUG'] = True
     
     # Initialize extensions
     db.init_app(app)

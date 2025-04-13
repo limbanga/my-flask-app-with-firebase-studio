@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h1>Danh sách phim</h1>
-<ul>
-    {% for movie in movies %}
-        <li>
-            <a href="{{ url_for('main.movie_detail', movie_id=movie.id) }}">{{ movie.title }}</a>
-        </li>
-    {% endfor %}
-</ul>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">🎬 Danh sách phim</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {% for movie in movies %}
+            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 p-4">
+                <a href="{{ url_for('main.movie_detail', movie_id=movie.id) }}">
+                    <div class="text-lg font-semibold text-blue-600 hover:underline">
+                        {{ movie.title }}
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">Xem chi tiết &rarr;</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
