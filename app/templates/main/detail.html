@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ movie.title }}</h2>
+<p>{{ movie.description }}</p>
+<h3>Suất chiếu</h3>
+<ul>
+    {% for show in movie.showtimes %}
+        <li>
+            {{ show.date_time }} - {{ show.available_seats }} ghế trống
+            <a href="{{ url_for('booking.book_ticket', showtime_id=show.id) }}">Đặt vé</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

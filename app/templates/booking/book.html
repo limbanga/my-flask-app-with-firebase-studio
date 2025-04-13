@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Đặt vé cho suất: {{ showtime.date_time }}</h2>
+<form method="POST">
+    <label for="seat">Chọn số ghế:</label>
+    <input type="text" name="seat" placeholder="A1, B2..." required>
+    <button type="submit">Đặt vé</button>
+</form>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Danh sách phim</h1>
+<ul>
+    {% for movie in movies %}
+        <li>
+            <a href="{{ url_for('main.movie_detail', movie_id=movie.id) }}">{{ movie.title }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

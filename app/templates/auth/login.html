@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Đăng nhập</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.email.label }} {{ form.email(size=32) }}<br>
+    {{ form.password.label }} {{ form.password(size=32) }}<br>
+    {{ form.submit() }}
+</form>
+<p>Chưa có tài khoản? <a href="{{ url_for('auth.register') }}">Đăng ký</a></p>
+{% endblock %}
