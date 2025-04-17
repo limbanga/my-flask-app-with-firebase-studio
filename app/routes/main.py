@@ -8,7 +8,7 @@ def index():
     movies = Movie.query.all()
     return render_template('main/index.html', movies=movies)
 
-@main_bp.route('/movie/<int:movie_id>')
+@main_bp.route('/movies/<int:movie_id>')
 def movie_detail(movie_id):
     movie = Movie.query.get_or_404(movie_id)
     return render_template('main/detail.html', movie=movie)
