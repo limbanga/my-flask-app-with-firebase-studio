@@ -44,5 +44,5 @@ class Movie(db.Model):
     is_active = db.Column(db.Boolean, default=True)
     # Trạng thái hiển thị của phim (ẩn / hiện)
 
-    showtimes = db.relationship('Showtime', backref='movie', lazy=True)
+    showtimes = db.relationship('Showtime', back_populates='movie', cascade='all, delete-orphan')
     # Danh sách các suất chiếu liên quan đến phim này

@@ -2,7 +2,8 @@ from app import create_app, db
 from app.models.movie import Movie
 from app.models.showtime import Showtime
 from app.models.user import User
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
+import random
 
 app = create_app()
 
@@ -232,11 +233,31 @@ def seed_data():
 
     print("15 movies have been seeded successfully.")
 
-    # # Create some showtimes for the movies
-    # showtime1 = Showtime(movie_id=movie1.id, date_time=datetime(2025, 5, 10, 19, 30), available_seats=50)
-    # showtime2 = Showtime(movie_id=movie1.id, date_time=datetime(2025, 5, 11, 14, 0), available_seats=50)
-    # showtime3 = Showtime(movie_id=movie2.id, date_time=datetime(2025, 5, 12, 16, 0), available_seats=50)
-    
+    # Create some showtimes for the movies
+    # Tạo showtimes cho mỗi movie với thời gian và ghế ngẫu nhiên
+    for movie in movies:
+        now = datetime.now()
+        showtimes = []
+        for i in range(3):  # tạo 3 suất chiếu cho mỗi phim
+            days_offset = random.randint(1, 7)  # từ 1 đến 7 ngày tới
+            hour = random.choice([9, 11, 13, 15, 17, 19, 21])  # giờ chiếu phổ biến
+            minute = random.choice([0, 15, 30, 45])  # phút phổ biến
+            date_time = now.replace(hour=hour, minute=minute, second=0, microsecond=0) + timedelta(days=days_offset)
+            available_seats = random.randint(30, 70)  # số ghế trống từ 30 đến 70
+
+            showtimes.append(
+                Showtime(
+                    movie_id=movie.id,
+                    date_time=date_time,
+                    available_seats=available_seats
+                )
+            )
+        
+        db.session.add_all(showtimes)
+
+    db.session.commit()
+    print("Showtimes have been seeded successfully.")
+        
     # # Add showtimes to session
     # db.session.add(showtime1)
     # db.session.add(showtime2)
