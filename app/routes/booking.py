@@ -24,3 +24,9 @@ def book_ticket(showtime_id):
         return redirect(url_for('main.index'))
 
     return render_template('booking/book.html', showtime=showtime)
+
+@booking_bp.route('/my-bookings')
+@login_required
+def my_bookings():
+    bookings = Booking.query.filter_by(user_id=current_user.id).join(Showtime).all()
+    return render_template('booking/my_bookings.html', bookings=bookings)

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-xl mt-8">
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">🎟️ Vé của tôi</h2>
+
+    {% if bookings %}
+        <ul class="space-y-4">
+            {% for booking in bookings %}
+            <li class="p-4 bg-gray-100 rounded-lg shadow-sm hover:bg-gray-200 transition">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-lg font-semibold text-blue-700">Phim: {{ booking.showtime.movie.title }}</p>
+                        <p class="text-gray-600">Thời gian: {{ booking.showtime.date_time.strftime('%d/%m/%Y %H:%M') }}</p>
+                        <p class="text-gray-600">Ghế: {{ booking.seat_number }}</p>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-gray-600">Bạn chưa đặt vé nào.</p>
+    {% endif %}
+</div>
+{% endblock %}
