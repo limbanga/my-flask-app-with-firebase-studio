@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_mail import Mail
+from datetime import datetime
 
 db = SQLAlchemy()
 mail = Mail()
@@ -31,7 +32,9 @@ def create_app(config_class='config.DevConfig'):
     app.register_blueprint(booking_bp)
     app.register_blueprint(movie_bp)
     
-    
+    @app.context_processor
+    def inject_now():
+        return {'current_year': datetime.now().year}
 
     with app.app_context():
         from app.models import user, movie, showtime, booking
