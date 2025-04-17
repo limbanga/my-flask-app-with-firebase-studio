@@ -6,22 +6,7 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {% for movie in movies %}
-            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 p-4">
-                <a href="{{ url_for('main.movie_detail', movie_id=movie.id) }}">
-                    {% if movie.poster_url %}
-                        <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" class="w-full h-60 object-cover rounded-md mb-4">
-                    {% endif %}
-                    <div class="text-lg font-semibold text-blue-600 hover:underline">
-                        {{ movie.title }}
-                    </div>
-                    <p class="text-sm text-gray-500 mt-1">Thể loại: {{ movie.genre or 'Đang cập nhật' }}</p>
-                    <p class="text-sm text-gray-500">Thời lượng: {{ movie.duration }} phút</p>
-                    <p class="text-sm text-gray-500">Khởi chiếu: {{ movie.release_date.strftime('%d/%m/%Y') if movie.release_date else 'Chưa rõ' }}</p>
-                    <p class="text-sm text-gray-500">Đạo diễn: {{ movie.director or 'Chưa cập nhật' }}</p>
-                    <p class="text-sm text-gray-500">Độ tuổi: {{ movie.rated or 'Không giới hạn' }}</p>
-                    <p class="text-sm text-gray-500 mt-1 italic">Xem chi tiết &rarr;</p>
-                </a>
-            </div>
+            {% include 'components/movie_card.html' %}
         {% endfor %}
     </div>
 </div>
