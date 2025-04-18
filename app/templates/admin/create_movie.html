@@ -5,17 +5,67 @@
   <form method="POST">
     {{ form.hidden_tag() }}
     <div class="space-y-4">
-      {{ form.title.label }} {{ form.title(class="w-full input") }}
-      {{ form.genre.label }} {{ form.genre(class="w-full input") }}
-      {{ form.duration.label }} {{ form.duration(class="w-full input") }}
-      {{ form.director.label }} {{ form.director(class="w-full input") }}
-      {{ form.poster_url.label }} {{ form.poster_url(class="w-full input") }}
-      {{ form.release_date.label }} {{ form.release_date(class="w-full input") }}
-      {{ form.rated.label }} {{ form.rated(class="w-full input") }}
-      <div>
-        {{ form.submit(class="bg-blue-600 text-white px-4 py-2 rounded-md") }}
+        <div>
+          {{ form.title.label }}
+          {{ form.title(class="w-full input") }}
+          {% for error in form.title.errors %}
+            <p class="text-red-500 text-sm">{{ error }}</p>
+          {% endfor %}
+        </div>
+      
+        <div>
+          {{ form.genre.label }}
+          {{ form.genre(class="w-full input") }}
+          {% for error in form.genre.errors %}
+            <p class="text-red-500 text-sm">{{ error }}</p>
+          {% endfor %}
+        </div>
+      
+        <div>
+          {{ form.duration.label }}
+          {{ form.duration(class="w-full input") }}
+          {% for error in form.duration.errors %}
+            <p class="text-red-500 text-sm">{{ error }}</p>
+          {% endfor %}
+        </div>
+      
+        <div>
+          {{ form.director.label }}
+          {{ form.director(class="w-full input") }}
+          {% for error in form.director.errors %}
+            <p class="text-red-500 text-sm">{{ error }}</p>
+          {% endfor %}
+        </div>
+      
+        <div>
+          {{ form.poster_url.label }}
+          {{ form.poster_url(class="w-full input") }}
+          {% for error in form.poster_url.errors %}
+            <p class="text-red-500 text-sm">{{ error }}</p>
+          {% endfor %}
+        </div>
+      
+        <div>
+          {{ form.release_date.label }}
+          {{ form.release_date(class="w-full input") }}
+          {% for error in form.release_date.errors %}
+            <p class="text-red-500 text-sm">{{ error }}</p>
+          {% endfor %}
+        </div>
+      
+        <div>
+          {{ form.rated.label }}
+          {{ form.rated(class="w-full input") }}
+          {% for error in form.rated.errors %}
+            <p class="text-red-500 text-sm">{{ error }}</p>
+          {% endfor %}
+        </div>
+      
+        <div>
+          {{ form.submit(class="bg-blue-600 text-white px-4 py-2 rounded-md") }}
+        </div>
       </div>
-    </div>
+      
   </form>
 </div>
 {% endblock %}
