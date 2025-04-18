@@ -1,30 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mx-auto px-4 py-8">
-  <h1 class="text-2xl font-bold mb-4">🎬 Quản lý phim</h1>
+    <h1 class="text-2xl font-bold mb-4">🎬 Quản lý phim</h1>
 
-  <table class="table-auto w-full border">
-    <thead class="bg-gray-200">
-      <tr>
-        <th class="px-4 py-2 text-left">Tiêu đề</th>
-        <th class="px-4 py-2 text-left">Thể loại</th>
-        <th class="px-4 py-2 text-left">Thời lượng</th>
-        <th class="px-4 py-2">Hành động</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for movie in movies %}
-      <tr class="border-t">
-        <td class="px-4 py-2">{{ movie.title }}</td>
-        <td class="px-4 py-2">{{ movie.genre }}</td>
-        <td class="px-4 py-2">{{ movie.duration }} phút</td>
-        <td class="px-4 py-2 text-center">
-          <a href="#" class="text-blue-500">Sửa</a> |
-          <a href="#" class="text-red-500">Xoá</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+    <a href="{{ url_for('admin.create_movie') }}"
+        class="mb-4 inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+        ➕ Thêm phim mới
+    </a>
+
+    <table class="table-auto w-full border">
+        <thead class="bg-gray-200">
+            <tr>
+                <th class="px-4 py-2 text-left">Tiêu đề</th>
+                <th class="px-4 py-2 text-left">Thể loại</th>
+                <th class="px-4 py-2 text-left">Thời lượng</th>
+                <th class="px-4 py-2">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movie in movies %}
+            <tr class="border-t">
+                <td class="px-4 py-2">{{ movie.title }}</td>
+                <td class="px-4 py-2">{{ movie.genre }}</td>
+                <td class="px-4 py-2">{{ movie.duration }} phút</td>
+                <td class="px-4 py-2 text-center">
+                    <a href="{{ url_for('admin.edit_movie', movie_id=movie.id) }}" class="text-yellow-500">Sửa</a> |
+                    <a href="#" class="text-red-500">Xoá</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mx-auto py-8 max-w-xl">
+  <h2 class="text-2xl font-bold mb-6">🎬 Thêm phim mới</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="space-y-4">
+      {{ form.title.label }} {{ form.title(class="w-full input") }}
+      {{ form.genre.label }} {{ form.genre(class="w-full input") }}
+      {{ form.duration.label }} {{ form.duration(class="w-full input") }}
+      {{ form.director.label }} {{ form.director(class="w-full input") }}
+      {{ form.poster_url.label }} {{ form.poster_url(class="w-full input") }}
+      {{ form.release_date.label }} {{ form.release_date(class="w-full input") }}
+      {{ form.rated.label }} {{ form.rated(class="w-full input") }}
+      <div>
+        {{ form.submit(class="bg-blue-600 text-white px-4 py-2 rounded-md") }}
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
