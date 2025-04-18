@@ -1,7 +1,77 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold text-gray-800">🎛 Trang quản trị</h1>
-  <p class="mt-4 text-gray-600">Chào mừng bạn đến với trang quản trị của hệ thống!</p>
+  <div class="mb-8">
+    <h1 class="text-4xl font-extrabold text-blue-800">👑 Trang Quản Trị</h1>
+    <p class="mt-2 text-gray-600 text-lg">Chào mừng bạn đến với bảng điều khiển của hệ thống!</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Card: Quản lý phim -->
+    <a href="{{ url_for('movie.index') }}" class="block bg-white shadow-md hover:shadow-xl transition rounded-2xl p-6">
+      <div class="flex items-center space-x-4">
+        <div class="text-blue-600 text-3xl">
+          🎬
+        </div>
+        <div>
+          <h2 class="text-xl font-semibold text-gray-800">Quản lý phim</h2>
+          <p class="text-sm text-gray-500">Thêm, sửa và xóa phim</p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Card: Quản lý lịch chiếu -->
+    <a href="#" class="block bg-white shadow-md hover:shadow-xl transition rounded-2xl p-6">
+      <div class="flex items-center space-x-4">
+        <div class="text-purple-600 text-3xl">
+          🕒
+        </div>
+        <div>
+          <h2 class="text-xl font-semibold text-gray-800">Lịch chiếu</h2>
+          <p class="text-sm text-gray-500">Quản lý lịch trình chiếu phim</p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Card: Quản lý người dùng -->
+    <a href="#" class="block bg-white shadow-md hover:shadow-xl transition rounded-2xl p-6">
+      <div class="flex items-center space-x-4">
+        <div class="text-green-600 text-3xl">
+          👤
+        </div>
+        <div>
+          <h2 class="text-xl font-semibold text-gray-800">Người dùng</h2>
+          <p class="text-sm text-gray-500">Xem và chỉnh sửa thông tin người dùng</p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Card: Quản lý đặt vé -->
+    <a href="#" class="block bg-white shadow-md hover:shadow-xl transition rounded-2xl p-6">
+      <div class="flex items-center space-x-4">
+        <div class="text-red-500 text-3xl">
+          🎟️
+        </div>
+        <div>
+          <h2 class="text-xl font-semibold text-gray-800">Đặt vé</h2>
+          <p class="text-sm text-gray-500">Xem lịch sử và trạng thái vé</p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Card: Thống kê -->
+    <a href="#" class="block bg-white shadow-md hover:shadow-xl transition rounded-2xl p-6">
+      <div class="flex items-center space-x-4">
+        <div class="text-yellow-500 text-3xl">
+          📊
+        </div>
+        <div>
+          <h2 class="text-xl font-semibold text-gray-800">Thống kê</h2>
+          <p class="text-sm text-gray-500">Xem báo cáo và biểu đồ hoạt động</p>
+        </div>
+      </div>
+    </a>
+  </div>
 </div>
 {% endblock %}

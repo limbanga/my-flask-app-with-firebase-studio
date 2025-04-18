@@ -3,6 +3,7 @@ from flask_login import login_required
 from app.models.movie import Movie
 from app.forms import MovieForm
 from app import db
+from collections import Counter
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -10,6 +11,7 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 @login_required
 def dashboard():
     return render_template('admin/dashboard.html')
+
 
 @admin_bp.route('/movies')
 @login_required
