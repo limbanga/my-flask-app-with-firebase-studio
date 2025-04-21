@@ -24,13 +24,13 @@ def create_app(config_class='config.DevConfig'):
     # Register blueprints
     from app.routes.auth import auth_bp
     from app.routes.main import main_bp
-    from app.routes.booking import booking_bp
+    # from app.routes.booking import booking_bp
     from app.routes.movie import movie_bp
     from app.routes.admin import admin_bp
     
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
-    app.register_blueprint(booking_bp)
+    # app.register_blueprint(booking_bp)
     app.register_blueprint(movie_bp)
     app.register_blueprint(admin_bp)
     
@@ -39,7 +39,7 @@ def create_app(config_class='config.DevConfig'):
         return {'current_year': datetime.now().year}
 
     with app.app_context():
-        from app.models import user, movie, showtime, booking
+        from app.models import user, movie, showtime
         db.create_all()
          # User loader
         @login_manager.user_loader

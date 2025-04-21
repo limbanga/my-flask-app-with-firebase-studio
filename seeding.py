@@ -235,28 +235,28 @@ def seed_data():
 
     # Create some showtimes for the movies
     # Tạo showtimes cho mỗi movie với thời gian và ghế ngẫu nhiên
-    for movie in movies:
-        now = datetime.now()
-        showtimes = []
-        for i in range(3):  # tạo 3 suất chiếu cho mỗi phim
-            days_offset = random.randint(1, 7)  # từ 1 đến 7 ngày tới
-            hour = random.choice([9, 11, 13, 15, 17, 19, 21])  # giờ chiếu phổ biến
-            minute = random.choice([0, 15, 30, 45])  # phút phổ biến
-            date_time = now.replace(hour=hour, minute=minute, second=0, microsecond=0) + timedelta(days=days_offset)
-            available_seats = random.randint(30, 70)  # số ghế trống từ 30 đến 70
+    # for movie in movies:
+    #     now = datetime.now()
+    #     showtimes = []
+    #     for i in range(3):  # tạo 3 suất chiếu cho mỗi phim
+    #         days_offset = random.randint(1, 7)  # từ 1 đến 7 ngày tới
+    #         hour = random.choice([9, 11, 13, 15, 17, 19, 21])  # giờ chiếu phổ biến
+    #         minute = random.choice([0, 15, 30, 45])  # phút phổ biến
+    #         date_time = now.replace(hour=hour, minute=minute, second=0, microsecond=0) + timedelta(days=days_offset)
+    #         available_seats = random.randint(30, 70)  # số ghế trống từ 30 đến 70
 
-            showtimes.append(
-                Showtime(
-                    movie_id=movie.id,
-                    date_time=date_time,
-                    available_seats=available_seats
-                )
-            )
+    #         showtimes.append(
+    #             Showtime(
+    #                 movie_id=movie.id,
+    #                 date_time=date_time,
+    #                 available_seats=available_seats
+    #             )
+    #         )
         
-        db.session.add_all(showtimes)
+    #     db.session.add_all(showtimes)
 
-    db.session.commit()
-    print("Showtimes have been seeded successfully.")
+    # db.session.commit()
+    # print("Showtimes have been seeded successfully.")
         
     # # Add showtimes to session
     # db.session.add(showtime1)
