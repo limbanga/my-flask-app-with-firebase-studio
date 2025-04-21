@@ -48,5 +48,11 @@ class Movie(db.Model):
     is_active = db.Column(db.Boolean, default=True)
     # Trạng thái phim (True: hiển thị, False: ẩn)
 
+    rating = db.Column(db.Float, default=0.0)
+    # Điểm đánh giá trung bình của phim (từ 0 đến 5)
+
+    rating_count = db.Column(db.Integer, default=0)
+    # Số lượng lượt đánh giá đã nhận
+
     showtimes = db.relationship('Showtime', back_populates='movie', cascade='all, delete-orphan')
     # Liên kết với các suất chiếu của phim này (quan hệ 1-n)

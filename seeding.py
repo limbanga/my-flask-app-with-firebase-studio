@@ -1,16 +1,18 @@
+import random
+from datetime import date, datetime, timedelta
+
 from app import create_app, db
 from app.models.movie import Movie
 from app.models.showtime import Showtime
 from app.models.user import User
-from datetime import datetime, date, timedelta
-import random
 
 app = create_app()
 
-# Function to seed the data
-def seed_data():
-    
-    # Delete old data
+def random_rating() -> int:
+    return random.randint(1, 10) / 2
+
+def seed_movie():
+     # Delete old data
     Movie.query.delete()
 
     db.session.commit()  # Xác nhận xóa
@@ -28,7 +30,9 @@ def seed_data():
             language='English',
             rated='C13',
             trailer_url='https://example.com/trailer/avengers',
-            is_active=True
+            is_active=True,
+            rating=round(random_rating(), 1),
+            rating_count=random.randint(100, 50000)
         ),
         Movie(
             title='Inception',
@@ -42,7 +46,9 @@ def seed_data():
             language='English',
             rated='C16',
             trailer_url='https://example.com/trailer/inception',
-            is_active=True
+            is_active=True,
+            rating=round(random_rating(), 1),
+            rating_count=random.randint(100, 50000)
         ),
         Movie(
             title='Parasite',
@@ -56,7 +62,9 @@ def seed_data():
             language='Korean',
             rated='C18',
             trailer_url='https://example.com/trailer/parasite',
-            is_active=True
+            is_active=True,
+            rating=round(random_rating(), 1),
+            rating_count=random.randint(100, 50000)
         ),
         Movie(
             title='Your Name',
@@ -70,7 +78,9 @@ def seed_data():
             language='Japanese',
             rated='P',
             trailer_url='https://example.com/trailer/yourname',
-            is_active=True
+            is_active=True,
+            rating=round(random_rating(), 1),
+            rating_count=random.randint(100, 50000)
         ),
         Movie(
             title='Joker',
@@ -84,7 +94,9 @@ def seed_data():
             language='English',
             rated='C18',
             trailer_url='https://example.com/trailer/joker',
-            is_active=True
+            is_active=True,
+            rating=round(random_rating(), 1),
+            rating_count=random.randint(100, 50000)
         ),
         Movie(
             title='Dune',
@@ -98,7 +110,9 @@ def seed_data():
             language='English',
             rated='C13',
             trailer_url='https://example.com/trailer/dune',
-            is_active=True
+            is_active=True,
+            rating=round(random_rating(), 1),
+            rating_count=random.randint(100, 50000)
         ),
         Movie(
             title='Interstellar',
@@ -112,7 +126,9 @@ def seed_data():
             language='English',
             rated='C13',
             trailer_url='https://example.com/trailer/interstellar',
-            is_active=True
+            is_active=True,
+            rating=round(random_rating(), 1),
+            rating_count=random.randint(100, 50000)
         ),
         Movie(
             title='The Lion King',
@@ -126,7 +142,9 @@ def seed_data():
             language='English',
             rated='P',
             trailer_url='https://example.com/trailer/lionking',
-            is_active=True
+            is_active=True,
+            rating=round(random_rating(), 1),
+            rating_count=random.randint(100, 50000)
         ),
         Movie(
             title='The Dark Knight',
@@ -140,7 +158,9 @@ def seed_data():
             language='English',
             rated='C16',
             trailer_url='https://example.com/trailer/darkknight',
-            is_active=True
+            is_active=True,
+            rating=round(random_rating(), 1),
+            rating_count=random.randint(100, 50000)
         ),
         Movie(
             title='Coco',
@@ -154,85 +174,21 @@ def seed_data():
             language='English',
             rated='P',
             trailer_url='https://example.com/trailer/coco',
-            is_active=True
-        ),
-        Movie(
-            title='Frozen',
-            description='A princess sets out on a journey to find her sister.',
-            duration=102,
-            poster_url='https://m.media-amazon.com/images/M/MV5BMTQ1MjQwMTE5OF5BMl5BanBnXkFtZTgwNjk3MTcyMDE@._V1_FMjpg_UX1000_.jpg',
-            genre='Animation',
-            release_date=date(2013, 11, 27),
-            director='Chris Buck, Jennifer Lee',
-            actors='Kristen Bell, Idina Menzel, Josh Gad',
-            language='English',
-            rated='P',
-            trailer_url='https://example.com/trailer/frozen',
-            is_active=True
-        ),
-        Movie(
-            title='Titanic',
-            description='A love story unfolds on the ill-fated Titanic ship.',
-            duration=195,
-            poster_url='https://upload.wikimedia.org/wikipedia/vi/a/ab/Titanic_3D_poster_Vietnam.jpg',
-            genre='Romance',
-            release_date=date(1997, 12, 19),
-            director='James Cameron',
-            actors='Leonardo DiCaprio, Kate Winslet',
-            language='English',
-            rated='C13',
-            trailer_url='https://example.com/trailer/titanic',
-            is_active=True
-        ),
-        Movie(
-            title='Spider-Man: No Way Home',
-            description='Peter Parker seeks help from Doctor Strange to restore his secret.',
-            duration=148,
-            poster_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlWqwmRiDNDFYw-4l3qFdT8TgpjRSTSF5X8A&s',
-            genre='Action',
-            release_date=date(2021, 12, 17),
-            director='Jon Watts',
-            actors='Tom Holland, Zendaya, Benedict Cumberbatch',
-            language='English',
-            rated='C13',
-            trailer_url='https://example.com/trailer/spiderman',
-            is_active=True
-        ),
-        Movie(
-            title='Minions: The Rise of Gru',
-            description='A young Gru dreams of becoming a supervillain.',
-            duration=87,
-            poster_url='https://play-lh.googleusercontent.com/jcW6qz6j4QnYQbyPiNcP8GGL8TKG-o3YBwCfSsOfBrz5JFEkYEShG7cwWFsDFO0YTk-H8OLSHSjxOhZ0rSk',
-            genre='Comedy',
-            release_date=date(2022, 7, 1),
-            director='Kyle Balda',
-            actors='Steve Carell, Pierre Coffin, Taraji P. Henson',
-            language='English',
-            rated='P',
-            trailer_url='https://example.com/trailer/minions',
-            is_active=True
-        ),
-        Movie(
-            title='Everything Everywhere All at Once',
-            description='A woman is swept into a multiverse adventure.',
-            duration=139,
-            poster_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpokhJeOkhn_ntJwgmyah-QY-MTByHjcWaWQ&s',
-            genre='Fantasy',
-            release_date=date(2022, 3, 11),
-            director='Daniel Kwan, Daniel Scheinert',
-            actors='Michelle Yeoh, Stephanie Hsu, Ke Huy Quan',
-            language='English',
-            rated='C16',
-            trailer_url='https://example.com/trailer/everything',
-            is_active=True
-        ),
+            is_active=True,
+            rating=round(random_rating(), 1),
+            rating_count=random.randint(100, 50000)
+        ) 
     ]
 
     db.session.add_all(movies)
     db.session.commit()
 
     print("15 movies have been seeded successfully.")
+    
 
+def seed_data():
+    pass
+    
     # Create some showtimes for the movies
     # Tạo showtimes cho mỗi movie với thời gian và ghế ngẫu nhiên
     # for movie in movies:
@@ -283,4 +239,4 @@ def seed_data():
 # Run the seed function
 if __name__ == "__main__":
     with app.app_context():
-        seed_data()
+        seed_movie()
