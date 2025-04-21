@@ -1,7 +1,6 @@
 from app import db
 from datetime import datetime
 from sqlalchemy.orm import validates
-from . import cinema
 
 class Showtime(db.Model):
     """

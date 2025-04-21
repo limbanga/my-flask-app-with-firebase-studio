@@ -1,5 +1,7 @@
 from datetime import date
+
 from app import db
+from .showtime import Showtime
 
 class Movie(db.Model):
     """
@@ -54,5 +56,5 @@ class Movie(db.Model):
     rating_count = db.Column(db.Integer, default=0)
     # Số lượng lượt đánh giá đã nhận
 
-    showtimes = db.relationship('Showtime', back_populates='movie', cascade='all, delete-orphan')
+    showtimes = db.relationship(Showtime, back_populates='movie', cascade='all, delete-orphan')
     # Liên kết với các suất chiếu của phim này (quan hệ 1-n)

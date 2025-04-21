@@ -3,8 +3,7 @@ from datetime import date, datetime, timedelta
 
 from app import create_app, db
 from app.models.movie import Movie
-from app.models.showtime import Showtime
-from app.models.user import User
+from app.models import *
 
 app = create_app()
 
@@ -12,7 +11,7 @@ def random_rating() -> int:
     return random.randint(1, 10) / 2
 
 def seed_movie():
-     # Delete old data
+    # Delete old data
     Movie.query.delete()
 
     db.session.commit()  # Xác nhận xóa
@@ -184,59 +183,95 @@ def seed_movie():
     db.session.commit()
 
     print("15 movies have been seeded successfully.")
-    
 
-def seed_data():
-    pass
-    
-    # Create some showtimes for the movies
-    # Tạo showtimes cho mỗi movie với thời gian và ghế ngẫu nhiên
-    # for movie in movies:
-    #     now = datetime.now()
-    #     showtimes = []
-    #     for i in range(3):  # tạo 3 suất chiếu cho mỗi phim
-    #         days_offset = random.randint(1, 7)  # từ 1 đến 7 ngày tới
-    #         hour = random.choice([9, 11, 13, 15, 17, 19, 21])  # giờ chiếu phổ biến
-    #         minute = random.choice([0, 15, 30, 45])  # phút phổ biến
-    #         date_time = now.replace(hour=hour, minute=minute, second=0, microsecond=0) + timedelta(days=days_offset)
-    #         available_seats = random.randint(30, 70)  # số ghế trống từ 30 đến 70
+def seed_cinema():
+    # Xoá dữ liệu cũ
+    Cinema.query.delete()
+    db.session.commit()
 
-    #         showtimes.append(
-    #             Showtime(
-    #                 movie_id=movie.id,
-    #                 date_time=date_time,
-    #                 available_seats=available_seats
-    #             )
-    #         )
-        
-    #     db.session.add_all(showtimes)
+    cinema_data = [
+        {
+            "name": "Galaxy Nguyễn Du",
+            "location": "116 Nguyễn Du, Quận 1, TP.HCM",
+            "capacity": 100
+        },
+        {
+            "name": "CGV Vincom Đồng Khởi",
+            "location": "72 Lê Thánh Tôn, Quận 1, TP.HCM",
+            "capacity": 120
+        },
+        {
+            "name": "Lotte Cinema Gò Vấp",
+            "location": "242 Nguyễn Văn Lượng, Gò Vấp, TP.HCM",
+            "capacity": 90
+        },
+        {
+            "name": "BHD Star Bitexco",
+            "location": "2 Hải Triều, Quận 1, TP.HCM",
+            "capacity": 110
+        },
+        {
+            "name": "Cinestar Quốc Thanh",
+            "location": "271 Nguyễn Trãi, Quận 1, TP.HCM",
+            "capacity": 85
+        },
+    ]
 
-    # db.session.commit()
-    # print("Showtimes have been seeded successfully.")
-        
-    # # Add showtimes to session
-    # db.session.add(showtime1)
-    # db.session.add(showtime2)
-    # db.session.add(showtime3)
+    cinemas = []
+    for data in cinema_data:
+        cinema = Cinema(
+            name=data["name"],
+            location=data["location"],
+            capacity=data["capacity"]
+        )
+        cinemas.append(cinema)
 
-    # # Commit to save showtimes
-    # db.session.commit()
-
-    # # # Create sample users
-    # # user1 = User(username='john_doe', email='john@example.com', password='password')
-    # # user2 = User(username='jane_doe', email='jane@example.com', password='password')
+    db.session.add_all(cinemas)
+    db.session.commit()
+    print("Cinemas have been seeded successfully.")
 
 
-    # # # Add users to session
-    # # db.session.add(user1)
-    # # db.session.add(user2)
+def seed_showtime():
+    # Xoá toàn bộ showtime cũ
+    Showtime.query.delete()
+    db.session.commit()
 
-    # # Commit to save users
-    # db.session.commit()
+    movies = Movie.query.all()
+    cinemas = Cinema.query.all()
 
-    # print('Data seeded successfully!')
+    all_showtimes = []
+
+    now = datetime.now()
+
+    for movie in movies:
+        for _ in range(random.randint(3, 7)):  # Tạo từ 3 đến 7 suất chiếu cho mỗi phim
+            cinema = random.choice(cinemas)
+            capacity = cinema.capacity
+
+            days_offset = random.randint(1, 7)
+            hour = random.choice([9, 11, 13, 15, 17, 19, 21])
+            minute = random.choice([0, 15, 30, 45])
+            date_time = now.replace(hour=hour, minute=minute, second=0, microsecond=0) + timedelta(days=days_offset)
+
+            available_seats = random.randint(30, min(70, capacity))
+
+            showtime = Showtime(
+                movie_id=movie.id,
+                cinema_id=cinema.id,
+                date_time=date_time,
+                available_seats=available_seats
+            )
+
+            all_showtimes.append(showtime)
+
+    db.session.add_all(all_showtimes)
+    db.session.commit()
+
+    print(f"Seeded {len(all_showtimes)} showtimes successfully.")
 
 # Run the seed function
 if __name__ == "__main__":
     with app.app_context():
         seed_movie()
+        seed_cinema()
+        seed_showtime()
