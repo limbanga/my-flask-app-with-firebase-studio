@@ -1,0 +1,26 @@
+{# templates/components/movie_detail_section.html #}
+<div class="flex flex-col md:flex-row">
+    <!-- Poster -->
+    <div class="md:w-1/3 mb-4 md:mb-0">
+        <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" class="rounded-lg shadow">
+    </div>
+
+    <!-- Movie Info -->
+    <div class="md:ml-6 md:w-2/3">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">{{ movie.title }}</h2>
+        <p class="text-gray-600 mb-4">{{ movie.description }}</p>
+
+        <ul class="text-sm text-gray-700 space-y-1">
+            <li><strong>Thể loại:</strong> {{ movie.genre }}</li>
+            <li><strong>Thời lượng:</strong> {{ movie.duration }} phút</li>
+            <li><strong>Ngày phát hành:</strong> {{ movie.release_date.strftime('%d/%m/%Y') }}</li>
+            <li><strong>Đạo diễn:</strong> {{ movie.director }}</li>
+            <li><strong>Diễn viên:</strong> {{ movie.actors }}</li>
+            <li><strong>Ngôn ngữ:</strong> {{ movie.language }}</li>
+            <li><strong>Phân loại:</strong> {{ movie.rated }}</li>
+            {% if movie.trailer_url %}
+            <li><strong>Trailer:</strong> <a href="{{ movie.trailer_url }}" class="text-blue-600 hover:underline" target="_blank">Xem trailer</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

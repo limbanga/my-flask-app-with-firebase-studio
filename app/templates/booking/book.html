@@ -26,4 +26,37 @@
         </div>
     </form>
 </div>
+
+<div x-data="{ selected: [] }">
+    <h2 class="text-xl font-bold mb-4">Chọn ghế cho suất chiếu lúc {{ showtime.date_time.strftime('%H:%M %d/%m/%Y') }}</h2>
+    
+    <div class="grid grid-cols-10 gap-2">
+        {% for ticket in tickets %}
+            <button 
+                :class="selected.includes({{ ticket.id }}) ? 'bg-green-500 text-white' : 'bg-gray-200'" 
+                @click.prevent="selected.includes({{ ticket.id }}) ? selected = selected.filter(id => id !== {{ ticket.id }}) : selected.push({{ ticket.id }})"
+                class="p-2 rounded text-sm border
+                       {% if ticket.status != 'booked' %} hover:bg-blue-300 {% else %} bg-red-400 cursor-not-allowed {% endif %}"
+                {% if ticket.status == 'booked' %} disabled {% endif %}
+            >
+                {{ ticket.seat.row }}{{ ticket.seat.column }}
+            </button>
+        {% endfor %}
+    </div>
+
+    <!-- Hiển thị ghế đã chọn -->
+    <div class="mt-4">
+        <h3 class="font-semibold">Ghế đã chọn:</h3>
+        <p x-text="selected.length > 0 ? selected.join(', ') : 'Chưa chọn ghế nào.'"></p>
+    </div>
+
+    <!-- Nút đặt vé -->
+    <form method="POST" action="#">
+        <input type="hidden" name="showtime_id" value="{{ showtime.id }}">
+        <input type="hidden" name="selected_tickets" :value="JSON.stringify(selected)">
+        <button type="submit" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded">Xác nhận đặt vé</button>
+    </form>
+</div>
+
 {% endblock %}
+

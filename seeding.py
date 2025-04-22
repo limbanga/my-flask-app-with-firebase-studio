@@ -1,8 +1,9 @@
+import math
 import random
+import string
 from datetime import date, datetime, timedelta
 
 from app import create_app, db
-from app.models.movie import Movie
 from app.models import *
 
 app = create_app()
@@ -269,9 +270,76 @@ def seed_showtime():
 
     print(f"Seeded {len(all_showtimes)} showtimes successfully.")
 
+
+def seed_seat():
+
+    # Xoá dữ liệu cũ
+    Seat.query.delete()
+    db.session.commit()
+
+    cinemas = Cinema.query.all()
+    all_seats = []
+
+    for cinema in cinemas:
+        capacity = cinema.capacity
+
+        # Giả sử mỗi hàng có 10 ghế
+        seats_per_row = 10
+        num_rows = math.ceil(capacity / seats_per_row)
+
+        row_labels = list(string.ascii_uppercase)[:num_rows]  # A, B, C, ...
+
+        for i, row in enumerate(row_labels):
+            for col in range(1, seats_per_row + 1):
+                if i * seats_per_row + col > capacity:
+                    break
+
+                seat = Seat(
+                    cinema_id=cinema.id,
+                    row=row,
+                    column=col,
+                    seat_type='Standard'  # có thể random VIP sau
+                )
+                all_seats.append(seat)
+
+    db.session.add_all(all_seats)
+    db.session.commit()
+    print("Seats have been seeded successfully.")
+
+def seed_ticket():
+    # Xóa dữ liệu cũ
+    Ticket.query.delete()
+    db.session.commit()
+
+    all_tickets = []
+
+    showtimes = Showtime.query.all()
+    for show in showtimes:
+        # Lấy ghế của rạp chiếu tương ứng với showtime
+        seats = Seat.query.filter_by(cinema_id=show.cinema_id).all()
+
+        # Chọn số ghế tương ứng với số lượng available_seats
+        available_seats = show.available_seats
+        chosen_seats = random.sample(seats, min(available_seats, len(seats)))
+
+        for seat in chosen_seats:
+            ticket = Ticket(
+                showtime_id=show.id,
+                seat_id=seat.id,
+                price=random.choice([70_000, 80_000, 90_000, 100_000]),  # Giá vé ngẫu nhiên
+                status=random.choice(list(TicketStatus))
+            )
+            all_tickets.append(ticket)
+
+    db.session.add_all(all_tickets)
+    db.session.commit()
+    print("Tickets have been seeded successfully.")
+
 # Run the seed function
 if __name__ == "__main__":
     with app.app_context():
         seed_movie()
         seed_cinema()
         seed_showtime()
+        seed_seat()
+        seed_ticket()
