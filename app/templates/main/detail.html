@@ -30,7 +30,7 @@
                     bg-gray-200 hover:bg-green-300 
                 {% endif %}" :class="selectedSeats.includes({{ ticket.id }}) ? 'bg-green-500 text-white' : ''"
                         @click.prevent="selectedSeats.includes({{ ticket.id }}) ? selectedSeats = selectedSeats.filter(id => id !== {{ ticket.id }}) : selectedSeats.push({{ ticket.id }})"
-                        {% if ticket.status.value !='AVAILABLE' %} disabled {% endif %}>
+                        {% if ticket.status.value !='available' %} disabled {% endif %}>
                         {{ ticket.seat.row }}{{ ticket.seat.column }}
                     </button>
                     {% endfor %}
