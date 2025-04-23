@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-screen-xl mx-auto p-6">
+    {% include 'components/movie_detail_section.html' %}
+
+    {% include 'components/ticket_selection.html' %}
+</div>
+{% endblock %}
+
+
+{% block script %}
+
+<script>
+    function bookingApp() {
+        return {
+            selectedDate: '',
+            selectedShow: null,
+            selectedSeats: [],
+            showtimes: {{ grouped_showtimes|tojson }},
+            init() {
+                this.selectedDate = '';
+                this.selectedShow = null;
+                this.selectedSeats = [];
+            },
+            formatTime(dt) {
+                const d = new Date(dt);
+                return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            },
+            selectDate() {
+                this.selectedShow = null;
+                this.selectedSeats = [];
+            },
+            selectShow(show) {
+                this.selectedShow = show;
+                this.selectedSeats = [];
+            },
+            toggleSeat(seatId) {
+                const idx = this.selectedSeats.indexOf(seatId);
+                if (idx >= 0) {
+                    this.selectedSeats.splice(idx, 1);
+                } else {
+                    this.selectedSeats.push(seatId);
+                }
+            },
+            isAvailable(ticket) {
+                return ticket.status.value === 'available';
+            }
+        }
+    }
+</script>
+{% endblock %}
+

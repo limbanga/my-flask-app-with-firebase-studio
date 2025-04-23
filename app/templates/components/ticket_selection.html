@@ -1,0 +1,72 @@
+<div x-data="bookingApp()" x-init="init()" class="text-white">
+    <!-- Chọn ngày chiếu -->
+    <div class="mb-4">
+        <p class="block mb-2 font-semibold text-lg">Chọn ngày chiếu:</p>
+        <div class="flex flex-wrap gap-2">
+            {% for date in grouped_showtimes.keys() %}
+            <label class="cursor-pointer">
+                <input type="radio" name="show_date" :value="'{{ date }}'" x-model="selectedDate" class="hidden">
+                <span
+                    class="px-4 py-2 rounded border text-sm font-medium"
+                    :class="selectedDate === '{{ date }}'
+                        ? 'bg-red-600 text-white border-red-600'
+                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'"
+                >
+                    {{ date }}
+                </span>
+            </label>
+            {% endfor %}
+        </div>        
+    </div>
+
+
+    <!-- Lịch chiếu và rạp -->
+    <template x-if="selectedDate">
+        <div>
+            <template x-for="(cinemas, cinemaName) in showtimes[selectedDate]" :key="cinemaName">
+                <div class="mb-4">
+                    <h4 class="font-semibold mt-2" x-text="cinemaName"></h4>
+                    <div class="flex flex-wrap gap-2 mt-1">
+                        <template x-for="show in cinemas" :key="show.id">
+                            <button @click="selectShow(show)"
+                                class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm"
+                                :class="selectedShow?.id === show.id ? 'ring-2 ring-red-500' : ''">
+                                <span x-text="formatTime(show.date_time)"></span> –
+                                <span x-text="show.available_seats"></span> ghế trống
+                            </button>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <!-- Ghế -->
+    <template x-if="selectedShow">
+        <div class="border p-4 rounded bg-gray-50 mt-4">
+            <p class="font-medium text-gray-700 mb-2">
+                Ghế cho suất chiếu: <span x-text="formatTime(selectedShow.date_time)"></span>
+            </p>
+            <div class="grid grid-cols-10 gap-1">
+                <template x-for="ticket in selectedShow.tickets" :key="ticket.id">
+                    <button class="p-1 text-xs rounded" :class="{
+                            'bg-red-400 cursor-not-allowed': !isAvailable(ticket),
+                            'bg-green-500 text-white': selectedSeats.includes(ticket.id),
+                            'bg-gray-200 hover:bg-green-300': isAvailable(ticket) && !selectedSeats.includes(ticket.id)
+                        }" :disabled="!isAvailable(ticket)" @click.prevent="toggleSeat(ticket.id)"
+                        :title="ticket.status.value" x-text="ticket.seat.row + ticket.seat.column"></button>
+                </template>
+            </div>
+        </div>
+    </template>
+
+    <!-- Nút đặt vé -->
+    <template x-if="selectedSeats.length > 0">
+        <form method="POST" action="#" class="mt-4">
+            <input type="hidden" name="selected_tickets" :value="JSON.stringify(selectedSeats)">
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">
+                Xác nhận đặt vé
+            </button>
+        </form>
+    </template>
+</div>

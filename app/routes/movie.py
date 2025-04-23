@@ -13,22 +13,46 @@ def index():
     return render_template('movie/index.html', movies=movies)
 
 
+
 @movie_bp.route('/movies/<int:movie_id>')
 def movie_detail(movie_id):
     movie = Movie.query.get_or_404(movie_id)
-    
-    # Group showtimes by date and cinema
+
     grouped_showtimes = defaultdict(lambda: defaultdict(list))
 
-    # Load các ticket liên kết với showtime
     for show in sorted(movie.showtimes, key=lambda s: s.date_time):
         show_date = show.date_time.strftime('%d/%m/%Y')
         cinema_name = show.cinema.name
 
-        # Lấy các ticket cho showtime (cùng seat)
+        # Lấy ticket liên kết với showtime và seat
         tickets = Ticket.query.filter_by(showtime_id=show.id).options(joinedload(Ticket.seat)).all()
-        show.tickets = tickets  # gán thuộc tính động để dùng trong template
 
-        grouped_showtimes[show_date][cinema_name].append(show)
+        # Biến đổi về dạng JSON-friendly
+        serialized_tickets = [
+            {
+                "id": ticket.id,
+                "seat": {
+                    "row": ticket.seat.row,
+                    "column": ticket.seat.column
+                },
+                "status": {
+                    "value": ticket.status.value  # 'available', 'paid', v.v.
+                }
+            } for ticket in tickets
+        ]
 
-    return render_template("/main/detail.html", movie=movie, grouped_showtimes=grouped_showtimes)
+        # Tạo bản ghi showtime
+        show_data = {
+            "id": show.id,
+            "date_time": show.date_time.isoformat(),  # để client chuyển về Date object
+            "available_seats": sum(1 for t in tickets if t.status.value == 'available'),
+            "tickets": serialized_tickets
+        }
+
+        grouped_showtimes[show_date][cinema_name].append(show_data)
+
+    return render_template(
+        "/movie/detail.html",
+        movie=movie,
+        grouped_showtimes=grouped_showtimes
+    )
