@@ -46,9 +46,12 @@
             },
             isAvailable(ticket) {
                 return ticket.status.value === 'available';
+            },
+            ticketPrice: 7000, // TODO: update chỗ này
+            formatCurrency(value) {
+                return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
             }
         }
     }
 </script>
 {% endblock %}
-
