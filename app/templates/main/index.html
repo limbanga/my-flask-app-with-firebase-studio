@@ -30,12 +30,12 @@
     </div>
 
     <!-- Horizontal scrollable movie list -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2">
-        {% for movie in movies %}
-        <div class="mb-3">
-            {% include 'components/movie_card.html' %}
-        </div>
-        {% endfor %}
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2"
+    >
+      {% for movie in movies %}
+      <div class="mb-3">{% include 'components/movie_card.html' %}</div>
+      {% endfor %}
     </div>
 
     <div class="mt-4 text-right">
@@ -44,6 +44,8 @@
         <i class="fa-solid fa-arrow-right"></i>
       </a>
     </div>
+
+    <div class="my-4">{% include "components/promotions_section.html" %}</div>
   </section>
 </div>
 
