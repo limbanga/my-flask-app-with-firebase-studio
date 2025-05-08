@@ -1,28 +1,63 @@
-<div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300">
-    <a href="{{ url_for('movie.movie_detail', movie_id=movie.id) }}">
-        {% if movie.poster_url %}
-        <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" class="w-full h-60 object-cover">
-        {% endif %}
-        <div class="p-2">
+<div
+  x-data="{ hovered: false }"
+  @mouseenter="hovered = true"
+  @mouseleave="hovered = false"
+  class="group relative flex-shrink-0 rounded-lg overflow-hidden transition-all duration-300 w-[200px] h-[300px]"
+  :class="{ 'ring-2 ring-primary shadow-lg shadow-primary/20 scale-[1.02]': hovered }"
+>
+  <a
+    href="{{ url_for('movie.movie_detail', movie_id=movie.id) }}"
+    class="absolute inset-0 z-10"
+  >
+    <!-- Poster -->
+    {% if movie.poster_url %}
+    <img
+      src="{{ movie.poster_url }}"
+      alt="{{ movie.title }}"
+      class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+    />
+    {% endif %}
 
-            <div class="text-lg font-semibold text-blue-600 hover:underline">
-                {{ movie.title }}
-            </div>
+    <!-- Gradient Overlay -->
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"
+    ></div>
 
-            <!-- Rating -->
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-star text-yellow-500"></i>
-                <span class="text-sm text-gray-600">{{  movie.rating }}</span>
-            </div>
-
-
-            <p class="text-sm text-gray-500 mt-1">Thể loại: {{ movie.genre or 'Đang cập nhật' }}</p>
-            <p class="text-sm text-gray-500">Thời lượng: {{ movie.duration }} phút</p>
-            <p class="text-sm text-gray-500">Khởi chiếu: {{ movie.release_date.strftime('%d/%m/%Y') if
-                movie.release_date else 'Chưa rõ' }}</p>
-            <p class="text-sm text-gray-500">Đạo diễn: {{ movie.director or 'Chưa cập nhật' }}</p>
-            <p class="text-sm text-gray-500">Độ tuổi: {{ movie.rated or 'Không giới hạn' }}</p>
-            <p class="text-sm text-gray-500 mt-1 italic">Xem chi tiết &rarr;</p>
+    <!-- Nội dung -->
+    <div class="absolute bottom-0 left-0 right-0 p-4 z-20">
+      <div class="flex items-center gap-2 mb-2">
+        <div
+          class="flex items-center gap-1 bg-cinema-dark/80 backdrop-blur-sm px-2 py-1 rounded text-xs text-white"
+        >
+          <i class="fa-solid fa-star text-cinema-accent text-[10px]"></i>
+          <span>{{ "%.1f"|format(movie.rating) }}</span>
         </div>
-    </a>
+        <div
+          class="flex items-center gap-1 bg-cinema-dark/80 backdrop-blur-sm px-2 py-1 rounded text-xs text-white"
+        >
+          <i class="fa-regular fa-clock text-[10px]"></i>
+          <span>{{ movie.duration }} phút</span>
+        </div>
+      </div>
+      <h3 class="text-white font-bold line-clamp-2 text-sm md:text-base">
+        {{ movie.title }}
+      </h3>
+      <p class="text-white/70 text-xs">
+        {{ movie.release_date.strftime('%Y') if movie.release_date else 'Chưa
+        rõ' }}
+      </p>
+    </div>
+
+    <!-- Nút đặt vé khi hover -->
+    <div
+      class="absolute inset-0 flex items-center justify-center bg-cinema-dark/60 backdrop-blur-sm opacity-0 transition-opacity duration-300 z-30"
+      :class="{ 'opacity-100': hovered }"
+    >
+      <div
+        class="bg-primary text-white px-4 py-2 rounded-full text-sm font-medium"
+      >
+        Đặt vé
+      </div>
+    </div>
+  </a>
 </div>

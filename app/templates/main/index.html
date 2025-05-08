@@ -1,28 +1,50 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %} {% include
+"components/hero_section.html" %}
 
-{% block content %}
-
-{% include "components/hero_section.html" %}
-
-<!-- Giới thiệu -->
-<section class="py-12 bg-gray-100 text-center">
-    <div class="container mx-auto px-4">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">📽️ Trải nghiệm tuyệt vời tại rạp</h2>
-        <p class="text-gray-600 max-w-2xl mx-auto">
-            Với hệ thống âm thanh vòm hiện đại, ghế ngồi thoải mái và dịch vụ tận tình, chúng tôi mang đến cho bạn không gian giải trí tuyệt vời nhất!
-        </p>
+<div class="min-h-screen bg-gray-900 text-white">
+  <section
+    class="py-10 container mx-auto px-4 md:px-6"
+    x-data="{ category: 'now-showing' }"
+  >
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-2xl font-bold">Phim</h2>
+        <p class="text-white/60 text-sm">Tìm bộ phim yêu thích của bạn</p>
+      </div>
+      <div class="flex gap-2 font-medium">
+        <button
+          class="px-4 py-2 text-sm rounded border border-gray-600"
+          :class="category === 'now-showing' ? 'bg-primary text-white' : 'text-white/70'"
+          @click="category = 'now-showing'"
+        >
+          Đang Chiếu
+        </button>
+        <button
+          class="px-4 py-2 text-sm rounded border border-gray-600"
+          :class="category === 'coming-soon' ? 'bg-secondary text-black' : 'text-white/70'"
+          @click="category = 'coming-soon'"
+        >
+          Sắp Chiếu
+        </button>
+      </div>
     </div>
-</section>
 
-<!-- Danh sách phim -->
-<div class="container mx-auto px-4 py-8">
-    <h2 class="text-3xl font-bold text-gray-800 mb-6">🎞️ Phim Đang Chiếu</h2>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <!-- Horizontal scrollable movie list -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2">
         {% for movie in movies %}
+        <div class="mb-3">
             {% include 'components/movie_card.html' %}
+        </div>
         {% endfor %}
     </div>
+
+    <div class="mt-4 text-right">
+      <a href="" class="text-primary hover:underline inline-flex items-center">
+        Xem tất cả phim
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </section>
 </div>
 
 {% endblock %}
