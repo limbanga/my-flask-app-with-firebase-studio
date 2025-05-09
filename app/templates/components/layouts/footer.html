@@ -1,0 +1,88 @@
+<footer class="bg-cinema-dark border-t border-border py-10">
+  <div class="container mx-auto px-4 md:px-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Tên thương hiệu -->
+      <div>
+        <h3 class="text-lg font-bold mb-4">
+          <span>CINE</span>
+          Nest
+        </h3>
+        <p class="text-white/70 text-sm">
+          Nơi trải nghiệm điện ảnh đỉnh cao cùng bạn bè và người thân.
+        </p>
+      </div>
+
+      <!-- Liên kết nhanh -->
+      <div>
+        <h4 class="font-medium mb-4 text-white">Liên kết nhanh</h4>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a
+              href="{{ url_for('main.index') }}"
+              class="text-white/70 hover:text-primary"
+              >Trang chủ</a
+            >
+          </li>
+          <li>
+            <a
+              href="{{ url_for('movie.index') }}"
+              class="text-white/70 hover:text-primary"
+              >Danh sách phim</a
+            >
+          </li>
+          <li>
+            <a href="#" class="text-white/70 hover:text-primary">Lịch chiếu</a>
+          </li>
+          <li>
+            <a href="#" class="text-white/70 hover:text-primary">Liên hệ</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Thông tin -->
+      <div>
+        <h4 class="font-medium mb-4  text-white">Thông tin</h4>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a href="#" class="text-white/70 hover:text-primary">Giới thiệu</a>
+          </li>
+          <li>
+            <a href="#" class="text-white/70 hover:text-primary"
+              >Chính sách bảo mật</a
+            >
+          </li>
+          <li>
+            <a href="#" class="text-white/70 hover:text-primary"
+              >Điều khoản sử dụng</a
+            >
+          </li>
+          <li><a href="#" class="text-white/70 hover:text-primary">FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Liên hệ -->
+      <div>
+        <h4 class="font-medium mb-4  text-white">Liên hệ</h4>
+        <p class="text-white/70 text-sm mb-2">
+          123 Đường 3/2, Quận 10, TP. HCM<br />
+          support@cinenest.vn
+        </p>
+        <p class="text-white/70 text-sm">0123 456 789</p>
+        <div class="flex space-x-4 mt-3">
+          <a href="#" class="text-white/70 hover:text-blue-400 text-sm"
+            >Facebook</a
+          >
+          <a href="#" class="text-white/70 hover:text-pink-400 text-sm"
+            >Instagram</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="border-t border-border mt-8 pt-8 text-center text-white/50 text-sm"
+    >
+      &copy; {{ current_year }} CINE Nest. All rights reserved.
+    </div>
+  </div>
+</footer>
