@@ -4,9 +4,12 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from datetime import datetime
 
+from .logger_config import setup_logger
+
 db = SQLAlchemy()
 mail = Mail()
 login_manager = LoginManager()
+setup_logger(name='flask_app') 
 
 login_manager.login_view = 'auth.login'  # Đặt trang đăng nhập nếu người dùng chưa đăng nhập
 

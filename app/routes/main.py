@@ -1,6 +1,10 @@
 from flask import Blueprint, render_template
 from app.models.movie import Movie
 
+import logging
+
+logger = logging.getLogger('flask_app') 
+
 main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/')
@@ -15,5 +19,6 @@ def index():
         + Truyền dữ liệu phim vào template 'main/index.html' để hiển thị.
     - Trả về: HTML hiển thị giao diện trang chủ với danh sách phim.
     """
+    logger.info("User accessed profile page")
     movies = Movie.query.all()
     return render_template('main/index.html', movies=movies)
