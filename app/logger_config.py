@@ -1,33 +1,35 @@
 import logging
 from colorlog import ColoredFormatter
+from logging.handlers import RotatingFileHandler
 
-def setup_logger(name='flask_app', level=logging.DEBUG, log_file='app.log'):
+# Cấu hình logger cho Flask
+def setup_logger(name="flask_app", level=logging.DEBUG, log_file="app.log"):
     # Formatter cho console (màu sắc)
     console_formatter = ColoredFormatter(
         "%(log_color)s[%(asctime)s] [%(levelname)-8s] [%(name)s] [%(filename)s:%(lineno)d]%(reset)s | %(message_log_color)s%(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
         log_colors={
-            'DEBUG':    'cyan',
-            'INFO':     'green',
-            'WARNING':  'yellow',
-            'ERROR':    'red',
-            'CRITICAL': 'bold_red',
+            "DEBUG": "cyan",
+            "INFO": "green",
+            "WARNING": "yellow",
+            "ERROR": "red",
+            "CRITICAL": "bold_red",
         },
         secondary_log_colors={
-            'message': {
-                'DEBUG':    'cyan',
-                'INFO':     'white',
-                'WARNING':  'yellow',
-                'ERROR':    'red',
-                'CRITICAL': 'bold_red',
+            "message": {
+                "DEBUG": "cyan",
+                "INFO": "white",
+                "WARNING": "yellow",
+                "ERROR": "red",
+                "CRITICAL": "bold_red",
             }
-        }
+        },
     )
 
     # Formatter cho file (không cần màu)
     file_formatter = logging.Formatter(
         "[%(asctime)s] [%(levelname)-8s] [%(name)s] [%(filename)s:%(lineno)d] | %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S"
+        datefmt="%Y-%m-%d %H:%M:%S",
     )
 
     logger = logging.getLogger(name)
@@ -39,8 +41,13 @@ def setup_logger(name='flask_app', level=logging.DEBUG, log_file='app.log'):
     console_handler.setFormatter(console_formatter)
     logger.addHandler(console_handler)
 
-    # File handler
-    file_handler = logging.FileHandler(log_file)
+    # File handler có xoay file nếu quá lớn
+    file_handler = RotatingFileHandler(
+        log_file,
+        maxBytes=5 * 1024 * 1024,  # 5MB
+        backupCount=3,  # Lưu tối đa 3 file log cũ
+        encoding="utf-8",
+    )
     file_handler.setFormatter(file_formatter)
     logger.addHandler(file_handler)
 
