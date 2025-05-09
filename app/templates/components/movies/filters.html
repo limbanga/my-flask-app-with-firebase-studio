@@ -1,0 +1,55 @@
+<div class="bg-card/30 backdrop-blur-sm border border-border rounded-lg p-4 mb-8">
+  <form method="get" action="{{ url_for('movie.index') }}" class="flex flex-col md:flex-row gap-4">
+    <!-- Search Input -->
+    <div class="relative flex-1">
+      <input
+        type="text"
+        name="search"
+        placeholder="Search movies, actors, directors..."
+        value="{{ request.args.get('search', '') }}"
+        class="w-full bg-background/50 border border-border text-white pl-10 py-2 rounded-md focus:outline-none"
+      />
+      <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50"></i>
+    </div>
+
+    <!-- Genre and Sort -->
+    <div class="flex gap-3 flex-wrap md:flex-nowrap">
+      <!-- Genre Select -->
+      <select name="genre" class="w-[180px] bg-background/50 border border-border text-white rounded-md px-3 py-2">
+        <option value="">All Genres</option>
+        {% for g in all_genres %}
+          <option value="{{ g }}" {% if request.args.get('genre') == g %}selected{% endif %}>{{ g }}</option>
+        {% endfor %}
+      </select>
+
+      <!-- Sort By Select -->
+      <select name="sort" class="w-[180px] bg-background/50 border border-border text-white rounded-md px-3 py-2">
+        <option value="popularity" {% if request.args.get('sort') == 'popularity' %}selected{% endif %}>Popularity</option>
+        <option value="title-asc" {% if request.args.get('sort') == 'title-asc' %}selected{% endif %}>Title (A-Z)</option>
+        <option value="title-desc" {% if request.args.get('sort') == 'title-desc' %}selected{% endif %}>Title (Z-A)</option>
+        <option value="year-desc" {% if request.args.get('sort') == 'year-desc' %}selected{% endif %}>Newest</option>
+        <option value="year-asc" {% if request.args.get('sort') == 'year-asc' %}selected{% endif %}>Oldest</option>
+      </select>
+
+      <!-- View Mode Toggle -->
+      <div class="flex gap-1 items-center border border-border rounded-md bg-background/50 px-2">
+        <button
+          type="submit"
+          name="view"
+          value="grid"
+          class="h-8 w-8 {% if request.args.get('view') == 'grid' %}bg-primary text-white{% else %}text-white/50{% endif %} rounded-md"
+        >
+          <i class="fas fa-th-large text-sm"></i>
+        </button>
+        <button
+          type="submit"
+          name="view"
+          value="list"
+          class="h-8 w-8 {% if request.args.get('view') == 'list' %}bg-primary text-white{% else %}text-white/50{% endif %} rounded-md"
+        >
+          <i class="fas fa-list text-sm"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
