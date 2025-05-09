@@ -1,68 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Phim Ảnh</title>
-    <style>
-      [x-cloak] {
-        display: none;
-      }
-    </style>
-    <!-- Include the Alpine library on your page -->
-    <script src="https://unpkg.com/alpinejs" defer></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-  </head>
 
-  <body class="bg-gray-900 text-gray-800">
-    {% include 'partials/navbar.html' %} {% with messages =
-    get_flashed_messages(with_categories=true) %} {% for category, message in
-    messages %}
-    <div
-      class="p-4 mb-4 text-sm text-white bg-{{ 'green' if category == 'success' else 'red' }}-500 rounded-lg"
-    >
-      {{ message }}
-    </div>
-    {% endfor %}
-    {% endwith %} 
-    {% block content %}
-    {% endblock %} 
-    {% include 'components/layouts/footer.html' %}
+<head>
+  <meta charset="UTF-8" />
+  <title>Phim Ảnh</title>
+  <style>
+    [x-cloak] {
+      display: none;
+    }
+  </style>
+  <!-- Include the Alpine library on your page -->
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<body class="bg-gray-900 text-gray-800">
+  {% include 'partials/navbar.html' %} {% with messages =
+  get_flashed_messages(with_categories=true) %} {% for category, message in
+  messages %}
+  <div class="p-4 mb-4 text-sm text-white bg-{{ 'green' if category == 'success' else 'red' }}-500 rounded-lg">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endwith %}
+  {% block content %}
+  {% endblock %}
+  {% include 'components/layouts/footer.html' %}
 
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: "#E50914", // Màu đỏ Netflix-style
-              secondary: "#faac01", // Màu vàng sáng - dùng cho nhấn phụ
-              "cinema-dark": "#0f0f1b", // Nền chính - rất tối
-              "cinema-accent": "#faaa1b", // Màu nhấn - đỏ
-            },
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#E50914", // Màu đỏ Netflix-style
+            secondary: "#faac01", // Màu vàng sáng - dùng cho nhấn phụ
+            "cinema-dark": "#0f0f1b", // Nền chính - rất tối
+            "cinema-accent": "#faaa1b", // Màu nhấn - đỏ
           },
         },
-      };
-    </script>
+      },
+    };
+  </script>
 
-    <!-- Gắn sau đó là Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Gắn sau đó là Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    {% block script %}{% endblock %}
-  </body>
+  {% block script %}{% endblock %}
+</body>
+
 </html>
