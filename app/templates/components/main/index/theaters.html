@@ -1,25 +1,12 @@
 <section class="py-10 container mx-auto px-4 md:px-6">
-  <h2 class="text-2xl font-bold mb-6">Our Theaters</h2>
+  <h2 class="text-2xl font-bold mb-6">
+    <span class="text-primary">Rạp</span> chiếu phim
+    <span class="text-primary"> gần bạn</span>
+  </h2>
   
   <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-    
-    <!-- Theater 1 -->
-    <div class="bg-card rounded-lg overflow-hidden border border-border group hover:border-primary/50 transition-colors">
-      <div class="h-40 bg-muted overflow-hidden">
-        <img 
-          src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80" 
-          alt="Theater" 
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-      </div>
-      <div class="p-4">
-        <h3 class="font-bold mb-1">CineWorld Broadway</h3>
-        <p class="text-sm text-white/70 mb-3">123 Broadway St, New York, NY</p>
-        <a href="#" class="block text-center text-white text-sm border border-border rounded-md py-2 hover:bg-white/5 transition">
-          See Showtimes
-        </a>
-      </div>
-    </div>
-
+    {% for cinema in cinemas %}
+      {% include "components/cinemas/cinema_card.html" with context %}
+    {% endfor %}
   </div>
 </section>
