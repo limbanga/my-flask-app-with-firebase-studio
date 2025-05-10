@@ -1,58 +1,14 @@
-{% extends 'base.html' %} 
-{% block content %} 
+{% extends 'base.html' %} {% block content %} 
+<!--  -->
 {% include "components/main/index/hero_section.html" %}
 
-<div class="min-h-screen bg-gray-900 text-white">
-  <section
-    class="py-10 container mx-auto px-4 md:px-6"
-    x-data="{ category: 'now-showing' }"
-  >
-    <div class="flex items-center justify-between mb-6">
-      <div>
-        <h2 class="text-2xl font-bold">Phim</h2>
-        <p class="text-white/60 text-sm">Tìm bộ phim yêu thích của bạn</p>
-      </div>
-      <div class="flex gap-2 font-medium">
-        <button
-          class="px-4 py-2 text-sm rounded border border-gray-600"
-          :class="category === 'now-showing' ? 'bg-primary text-white' : 'text-white/70'"
-          @click="category = 'now-showing'"
-        >
-          Đang Chiếu
-        </button>
-        <button
-          class="px-4 py-2 text-sm rounded border border-gray-600"
-          :class="category === 'coming-soon' ? 'bg-secondary text-black' : 'text-white/70'"
-          @click="category = 'coming-soon'"
-        >
-          Sắp Chiếu
-        </button>
-      </div>
-    </div>
-
-    <!-- Horizontal scrollable movie list -->
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2"
-    >
-      {% for movie in movies %}
-      <div class="mb-3">{% include 'components/movies/movie_card.html' %}</div>
-      {% endfor %}
-    </div>
-
-    <div class="mt-4 text-right">
-      <a href="" class="text-primary hover:underline inline-flex items-center">
-        Xem tất cả phim
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
-    </div>
-  </section>
-  <section class="py-10 container mx-auto px-4 md:px-6">
-    {% include "components/main/index/promotions_section.html" %}
-  </section>
-
-  <section class="py-10 container mx-auto px-4 md:px-6">
-    {% include 'components/main/index/cenimas_section.html' %}
-  </section>
+<div class="min-h-screen text-white bg-cinema-dark/80">
+  <!--  -->
+  {% include "components/main/index/movie_section.html" %}
+  <!--  -->
+  {% include "components/main/index/promotions_section.html" %}
+  <!--  -->
+  {% include 'components/main/index/cenimas_section.html' %}
 </div>
 
 {% endblock %}
