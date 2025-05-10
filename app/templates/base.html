@@ -31,28 +31,26 @@
   <body class="bg-gray-900 text-gray-800">
     <!-- Navbar -->
     {% include 'partials/navbar.html' %} 
-
+    <!-- Message -->
     {% with messages = get_flashed_messages(with_categories=true) %} 
       {% for category, message in messages %}
-    <div
-      class="p-4 mb-4 text-sm text-white bg-{{ 'green' if category == 'success' else 'red' }}-500 rounded-lg"
-    >
-      {{ message }}
-    </div>
+        <div
+          class="p-4 mb-4 text-sm text-white bg-{{ 'green' if category == 'success' else 'red' }}-500 rounded-lg"
+        >
+          {{ message }}
+        </div>
       {% endfor %} 
     {% endwith %} 
-      <!-- content  -->
-        <div class="pt-12">
-          {% block content %} 
-          {% endblock %}
-        </div>
-      <!-- Footer -->
-      {% include 'components/layouts/footer.html' %}
+    <!-- content  -->
+    {% block content %} 
+    {% endblock %}
+    <!-- Footer -->
+    {% include 'components/layouts/footer.html' %}
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     {% include '_tailwind.config.js.html' %}
-
+    <!-- script -->
     {% block script %}{% endblock %}
   </body>
 </html>
